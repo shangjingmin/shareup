@@ -1,5 +1,3 @@
-%h1 Listing metadocs
-
 %table
   %tr
     %th Title
@@ -27,7 +25,8 @@
       %td= link_to 'Show', metadoc
       %td= link_to 'Edit', edit_metadoc_path(metadoc)
       %td= link_to 'Destroy', metadoc, :confirm => 'Are you sure?', :method => :delete
-
-%br
-
-= link_to 'New Metadoc', new_metadoc_path
+  %tr
+    %td
+      =will_paginate @metadocs
+      \&nbsp;Total:
+      =@search.total

@@ -37,3 +37,13 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 gem 'haml-rails'
+
+gem 'will_paginate'
+
+#For solr search suppot
+gem 'sunspot_rails'
+group :development, :test, :production do
+  #bundled solr distribution for development and test environment
+  gem 'sunspot_solr'
+end
+gem 'progress_bar'

@@ -2,7 +2,13 @@ class MetadocsController < ApplicationController
   # GET /metadocs
   # GET /metadocs.json
   def index
-    @metadocs = Metadoc.all
+    #@metadocs = Metadoc.all
+    @search = Metadoc.search do
+      keywords params[:query]
+      order_by :collect_at, :desc
+      paginate :page=>params[:page], :per_page=>25
+    end
+    @metadocs = @search.results
 
     respond_to do |format|
       format.html # index.html.erb
