@@ -1,0 +1,30 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @metadoc.title
+%p
+  %b Tags:
+  = @metadoc.tags
+%p
+  %b Content:
+  = @metadoc.content
+%p
+  %b From url:
+  = @metadoc.from_url
+%p
+  %b From mark:
+  = @metadoc.from_mark
+%p
+  %b Collect at:
+  = @metadoc.collect_at
+%p
+  %b Public:
+  = @metadoc.public
+%p
+  %b Comment:
+  = @metadoc.comment
+
+= link_to 'Edit', edit_metadoc_path(@metadoc)
+\|
+= link_to 'Back', metadocs_path

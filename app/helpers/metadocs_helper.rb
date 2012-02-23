@@ -1,0 +1,2 @@
+module MetadocsHelper
+end

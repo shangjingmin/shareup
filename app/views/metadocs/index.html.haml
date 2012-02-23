@@ -1,0 +1,33 @@
+%h1 Listing metadocs
+
+%table
+  %tr
+    %th Title
+    %th Tags
+    %th Content
+    %th From url
+    %th From mark
+    %th Collect at
+    %th Public
+    %th Comment
+    %th
+    %th
+    %th
+
+  - @metadocs.each do |metadoc|
+    %tr
+      %td= metadoc.title
+      %td= metadoc.tags
+      %td= metadoc.content
+      %td= metadoc.from_url
+      %td= metadoc.from_mark
+      %td= metadoc.collect_at
+      %td= metadoc.public
+      %td= metadoc.comment
+      %td= link_to 'Show', metadoc
+      %td= link_to 'Edit', edit_metadoc_path(metadoc)
+      %td= link_to 'Destroy', metadoc, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Metadoc', new_metadoc_path
