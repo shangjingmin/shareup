@@ -12,6 +12,12 @@ class AuthController < ApplicationController
     redirect_to root_path
   end
 
+  def quickin
+    _signin(User.quickin)
+    flash[:notice] = "Congratulations, you have signed in! Enjoy yourself!"
+    redirect_to root_path
+  end
+
   def signout
     reset_session
     redirect_to root_path

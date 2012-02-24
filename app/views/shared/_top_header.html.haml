@@ -1,0 +1,28 @@
+%table
+  %tr
+    %td
+      =link_to root_path do
+        Logo!
+    -if logined?
+      %td
+        =link_to 'docs', metadocs_path
+        |
+        =link_to 'new', new_metadoc_path
+    %td
+      =form_tag search_path, :method=>:get do
+        =text_field_tag :query, '', :placeholder=>'Search...'
+        =image_submit_tag '/images/icon_search.png'
+    %td
+      %table
+        %tr
+          -if logined?
+            %td
+              =link_to my_path do
+                %span= current_user.nickname
+            %td=link_to 'Sign Out', auth_signout_path, :method=>:delete
+          -else
+            %td= link_to 'Sign In', auth_signin_path
+            %td= link_to 'Quick Try', auth_quickin_path
+            -#%td= link_to 'Sign Up', auth_signup_path
+    %td.notice_msg
+      =flash[:notice]

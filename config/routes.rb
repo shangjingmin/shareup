@@ -1,13 +1,18 @@
 Shareup::Application.routes.draw do
+
   #====auth module
   get "auth/signup"
   post "auth/signuped"
+  get "auth/quickin"
   get "auth/signin"
   post "auth/signined"
   delete "auth/signout"
 
   get "home/index"
   root :to => 'home#index'
+
+  #====Search
+  get '/search', :to=>"searchs#index"
 
   resources :metadocs
   

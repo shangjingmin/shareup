@@ -13,9 +13,14 @@ class User < ActiveRecord::Base
     self.nickname = self.email.to_s.sub(/@.*$/, '')
   end
 
+  START_TIME = Time.new('2012-02-22 00:00')
+  def self.quickin
+    create(:email=>"shareup#{Time.now.to_i-START_TIME.to_i}@shareup.me", :password=>"shareup")
+  end
+
   def self.authenticate(params = {})
     if params.key?(:email) && params.key?(:password)
-      user = User.find_by_email(params[:email])
+      user = find_by_email(params[:email])
       return if user.nil?
       return user if user.password?(params[:password])
     end
