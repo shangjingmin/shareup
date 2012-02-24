@@ -1,22 +1,25 @@
 class AuthController < ApplicationController
-  #get request
   def signuped
-    logger.debug "====>params: #{params.inspect}"
-    new_user = User.create(params[:user])
+    if _signin(User.create!(params[:user]))
+      redirect_to root_path
+    else
+      render :action=>:signup
+    end
+  end
+
+  def signined
+    _signin(User.authenticate(params[:auth])) 
     redirect_to root_path
   end
 
-  #post request
-  def signin
-    #TODO FIXME
-    user = User.first
-    session[:uid] = user.id
-    redirect_to root_path
-  end
-
-  #delete request
   def signout
     reset_session
     redirect_to root_path
+  end
+
+  def _signin(user)
+    return if user.nil?
+    session[:uid] = user.id
+    user.id
   end
 end

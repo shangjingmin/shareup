@@ -1,16 +1,28 @@
+-content_for :header do
+  :javascript
+    $(function(){
+      $('#_submit_form').click(function(){
+        if($('#user_password').val().trim() != $('#user_repassword').val().trim()){
+          $('.error_msg').html('Password not matched!')
+          return false
+        }else{
+        }
+      })
+    })
 =form_tag auth_signuped_path do
+  .error_msg.field
   .field
     =label_tag 'user[email]', 'Email:'
-    =text_field_tag 'user[email]', ''
+    =text_field_tag 'user[email]', params[:user].try(:email), :placeholder=>'your@email.com'
   .field
     =label_tag 'user[nickname]', 'Nick Name:'
-    =text_field_tag 'user[nickname]', ''
+    =text_field_tag 'user[nickname]', params[:user].try(:nickname), :placeholder=>'Nick name'
     For display only!
   .field
     =label_tag 'user[password]', 'Password:'
     =password_field_tag 'user[password]', ''
   .field
-    =label_tag 'user[repassword]', 'Password Confirmation:'
-    =password_field_tag 'user[repassword]', ''
+    =label_tag 'user_repassword_', 'Confirmation:'
+    =password_field_tag 'user_repassword', ''
   .actions
-    = submit_tag 'Save'
+    =submit_tag 'Save', :id=>'_submit_form'

@@ -1,23 +1,36 @@
+#encoding: utf-8
 class User < ActiveRecord::Base
-  #validate rules
-  validates_presence_of :email
-  validates_uniqueness_of :email
+
+  EMAIL_REGEX = /^[-\w\.]{3,}@\w+(\.\w+)+$/i 
+  validates_format_of :email, :with=>EMAIL_REGEX, :message=>"格式：#{EMAIL_REGEX}！"
+  validates_uniqueness_of :email, :message=>"太受喜爱，已被用！"
   
-  #virtual attribute: password
-  attr_accessor :password
-  #validates_presence_of :password
-  validates_format_of :password, :with=>/^[^\s]{3,}$/, :message=>"password not passed!"
-  validates_confirmation_of :password
-  #note confirmation only works if it present!
-  validates_presence_of :password_confirmation, :if=>:password_changed?
+  attr_accessor :password #virtual attribute: password
+  validates_format_of :password, :with=>/^[^\s]{3,}$/, :on=>:create, :message=>"password not passed!"
+
+  before_create :_init
+  def _init
+    self.nickname = self.email.to_s.sub(/@.*$/, '')
+  end
+
+  def self.authenticate(params = {})
+    if params.key?(:email) && params.key?(:password)
+      user = User.find_by_email(params[:email])
+      return if user.nil?
+      return user if user.password?(params[:password])
+    end
+  end
+
+  def password?(password)  
+    encrypt(password.to_s.strip) == self.encrypted_password
+  end
 
   before_create :encrypt_password
   def encrypt_password
-    return unless password.present?
     self.password_salt = SecureRandom.hex(20) 
-    self.encrypted_password = encrypt(password)
+    self.encrypted_password = encrypt(self.password) 
   end
-  
+
   def encrypt(password)
     self.class.encrypt(self.password_salt, password)
   end

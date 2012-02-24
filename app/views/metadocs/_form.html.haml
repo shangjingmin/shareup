@@ -7,23 +7,19 @@
           %li= msg
 
   .field
+    = f.label :from_url, 'From'
+    = f.text_field :from_url
+    = f.check_box :public
+    = f.label :public
+  .field
     = f.label :title
     = f.text_field :title
     = f.label :tags
     = f.text_field :tags, :size=>20
   .field
-    = f.label :content
-    %br/
-    = f.text_area :content, :rows=>12, :cols=>50
-  .field
-    = f.label :from_url
-    = f.text_field :from_url
-    = f.label 'Mark', :for=>'from_mark'
-    = f.text_field :from_mark, :size=>20
+    = f.text_area :content, :placeholder=>'Content...', :rows=>12, :cols=>50
   .field
     = f.label :comment
     = f.text_field :comment
-    = f.check_box :public
-    = f.label :public
   .actions
     = f.submit 'Save'

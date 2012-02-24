@@ -1,2 +1,22 @@
-%h1 Auth#signin
-%p Find me in app/views/auth/signin.html.haml
+-content_for :header do
+  :javascript
+    $(function(){
+      $('#_submit_form').click(function(){
+        if($('#auth_email').val().trim().length == 0){
+          $('.error_msg').html('Input your email!')
+          $('#auth_email').focus()
+          return false
+        }else{
+        }
+      })
+    })
+=form_tag auth_signined_path do
+  .error_msg.field
+  .field
+    =label_tag 'auth[email]', 'Email:'
+    =text_field_tag 'auth[email]', params[:auth].try(:email), :placeholder=>'your@email.com'
+  .field
+    =label_tag 'auth[password]', 'Password:'
+    =password_field_tag 'auth[password]', ''
+  .actions
+    =submit_tag 'Save', :id=>'_submit_form'

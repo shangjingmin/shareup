@@ -1,5 +1,5 @@
 Shareup::Application.routes.draw do
-  #auth module
+  #====auth module
   get "auth/signup"
   post "auth/signuped"
   get "auth/signin"
