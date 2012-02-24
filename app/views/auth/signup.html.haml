@@ -1,0 +1,16 @@
+=form_tag auth_signuped_path do
+  .field
+    =label_tag 'user[email]', 'Email:'
+    =text_field_tag 'user[email]', ''
+  .field
+    =label_tag 'user[nickname]', 'Nick Name:'
+    =text_field_tag 'user[nickname]', ''
+    For display only!
+  .field
+    =label_tag 'user[password]', 'Password:'
+    =password_field_tag 'user[password]', ''
+  .field
+    =label_tag 'user[repassword]', 'Password Confirmation:'
+    =password_field_tag 'user[repassword]', ''
+  .actions
+    = submit_tag 'Save'

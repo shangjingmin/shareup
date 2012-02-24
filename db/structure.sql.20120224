@@ -1,0 +1,19 @@
+CREATE TABLE "metadocs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "tags" varchar(255), "content" text, "from_url" varchar(255), "from_mark" varchar(255), "collect_at" datetime, "public" boolean, "comment" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer);
+CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL);
+CREATE TABLE "taggings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "tag_id" integer, "taggable_id" integer, "taggable_type" varchar(255), "public" boolean, "tag_at" datetime, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
+CREATE TABLE "tags" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "ref_count" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
+CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "nickname" varchar(255), "realname" varchar(255), "mobile" varchar(255), "encrypted_password" varchar(255), "home_url" varchar(255), "biography" text, "professional" varchar(255), "focus_fields" varchar(255), "interest" varchar(255), "birthday" date, "comment" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "password_salt" varchar(255));
+CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version");
+INSERT INTO schema_migrations (version) VALUES ('20120223065208');
+
+INSERT INTO schema_migrations (version) VALUES ('20120223162840');
+
+INSERT INTO schema_migrations (version) VALUES ('20120223163606');
+
+INSERT INTO schema_migrations (version) VALUES ('20120223164029');
+
+INSERT INTO schema_migrations (version) VALUES ('20120223164935');
+
+INSERT INTO schema_migrations (version) VALUES ('20120224083349');
+
+INSERT INTO schema_migrations (version) VALUES ('20120224084708');

@@ -1,6 +1,26 @@
 Shareup::Application.routes.draw do
+  #auth module
+  get "auth/signup"
+  post "auth/signuped"
+  get "auth/signin"
+  post "auth/signined"
+  delete "auth/signout"
+
+  get "home/index"
+  root :to => 'home#index'
+
   resources :metadocs
-  root :to => 'metadocs#index'
+  
+  namespace :my do
+    get 'home/index'
+    get '/', :to=>'home#index'
+  end
+
+  #For admin.
+  namespace :admin do
+    get "tags/index"
+    get "users/index"
+  end
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

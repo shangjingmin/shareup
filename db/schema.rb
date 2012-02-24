@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120223065208) do
+ActiveRecord::Schema.define(:version => 20120224084708) do
 
   create_table "metadocs", :force => true do |t|
     t.string   "title"
@@ -24,6 +24,43 @@ ActiveRecord::Schema.define(:version => 20120223065208) do
     t.string   "comment"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "user_id"
+  end
+
+  create_table "taggings", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.boolean  "public"
+    t.datetime "tag_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "tags", :force => true do |t|
+    t.string   "name"
+    t.integer  "ref_count"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "email"
+    t.string   "nickname"
+    t.string   "realname"
+    t.string   "mobile"
+    t.string   "encrypted_password"
+    t.string   "home_url"
+    t.text     "biography"
+    t.string   "professional"
+    t.string   "focus_fields"
+    t.string   "interest"
+    t.date     "birthday"
+    t.string   "comment"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "password_salt"
   end
 
 end

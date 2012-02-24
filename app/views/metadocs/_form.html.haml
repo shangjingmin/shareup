@@ -9,26 +9,21 @@
   .field
     = f.label :title
     = f.text_field :title
-  .field
     = f.label :tags
-    = f.text_field :tags
+    = f.text_field :tags, :size=>20
   .field
     = f.label :content
-    = f.text_area :content
+    %br/
+    = f.text_area :content, :rows=>12, :cols=>50
   .field
     = f.label :from_url
     = f.text_field :from_url
-  .field
-    = f.label :from_mark
-    = f.text_field :from_mark
-  .field
-    = f.label :collect_at
-    = f.datetime_select :collect_at
-  .field
-    = f.label :public
-    = f.check_box :public
+    = f.label 'Mark', :for=>'from_mark'
+    = f.text_field :from_mark, :size=>20
   .field
     = f.label :comment
     = f.text_field :comment
+    = f.check_box :public
+    = f.label :public
   .actions
     = f.submit 'Save'

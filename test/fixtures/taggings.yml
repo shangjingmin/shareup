@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 1
+  tag_id: 1
+  taggable_id: 1
+  taggable_type: MyString
+  public: false
+  tag_at: 2012-02-24 00:49:35
+
+two:
+  user_id: 1
+  tag_id: 1
+  taggable_id: 1
+  taggable_type: MyString
+  public: false
+  tag_at: 2012-02-24 00:49:35
