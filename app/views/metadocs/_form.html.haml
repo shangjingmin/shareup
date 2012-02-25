@@ -1,3 +1,42 @@
+-content_for :header do
+  = stylesheet_link_tag "/plugins/colorbox/colorbox.css"
+  = javascript_include_tag "/plugins/colorbox/jquery.colorbox.js"
+  -#TODO move into coffee to protect source code!
+  :javascript
+    $(function(){
+      //Browse inline
+      $("#browse_inline_from_url_iframe").click(function(){
+        from_url = $("#metadoc_from_url").val().trim()
+        if(from_url.trim().length==0){
+          $(".notice_msg").html('No from url now!')
+          $("#metadoc_from_url").focus()
+          return false
+        }else{
+          $(".notice_msg").html('')
+        }
+        $("#from_url_iframe_ele").attr("src", from_url)
+        $("#inline_iframe_wrapper").show()
+        return false
+      })
+      //close browse inline
+      $("#close_inline_iframe").click(function(){
+        $("#inline_iframe_wrapper").hide()
+        return false
+      })
+
+      //Popup iframe
+      $("#popup_from_url_iframe").click(function(){
+        $(this).attr('href', $("#metadoc_from_url").val().trim())
+        //$(this).colorbox({iframe:true, width:"80%", height:"80%"})
+        //return false
+      }).colorbox({iframe:true, width:"80%", height:"80%"})
+
+      //New tab 
+      $("#new_tab_from_url").click(function(){
+        $(this).attr('href', $("#metadoc_from_url").val().trim())
+      })
+    })
+
 = form_for @metadoc do |f|
   -if @metadoc.errors.any?
     #error_explanation
@@ -9,8 +48,21 @@
   .field
     = f.label :from_url, 'From'
     = f.text_field :from_url
+    =link_to "Browse Inline", "javascript:void(0);", :id=>'browse_inline_from_url_iframe'
+    | 
+    =link_to "Popup", "#", :id=>'popup_from_url_iframe'
+    | 
+    =link_to "New Tab", "#", :id=>'new_tab_from_url', :target=>'_blank'
+    | 
+    =link_to "Extract", "#", :id=>'extract_from_url'
+    | 
+    =link_to "Snapshot", "#", :id=>'snapshot_from_url'
     = f.check_box :public
     = f.label :public
+  .field
+    #inline_iframe_wrapper.hidden
+      %div=link_to "Close Me", "#", :id=>"close_inline_iframe"
+      %iframe{:id=>'from_url_iframe_ele', :width=>'70%', :height=>'200px;', :frameborder=>1}
   .field
     = f.label :title
     = f.text_field :title

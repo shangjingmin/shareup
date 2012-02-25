@@ -50,7 +50,8 @@ class MetadocsController < ApplicationController
 
     respond_to do |format|
       if @metadoc.save
-        format.html { redirect_to @metadoc, notice: 'Metadoc was successfully created.' }
+        #format.html { redirect_to @metadoc, notice: 'Metadoc was successfully created.' }
+        format.html { redirect_to metadocs_url }
         format.json { render json: @metadoc, status: :created, location: @metadoc }
       else
         format.html { render action: "new" }
@@ -66,7 +67,8 @@ class MetadocsController < ApplicationController
 
     respond_to do |format|
       if @metadoc.update_attributes(params[:metadoc])
-        format.html { redirect_to @metadoc, notice: 'Metadoc was successfully updated.' }
+        #format.html { redirect_to @metadoc, notice: 'Metadoc was successfully updated.' }
+        format.html { redirect_to metadocs_url }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

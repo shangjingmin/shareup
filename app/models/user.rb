@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
 
   START_TIME = Time.new('2012-02-22 00:00')
   def self.quickin
-    create(:email=>"shareup#{Time.now.to_i-START_TIME.to_i}@shareup.me", :password=>"shareup")
+    create(:email=>"Su#{Time.now.to_i-START_TIME.to_i}@shareup.me", :password=>"shareup")
   end
 
   def self.authenticate(params = {})
