@@ -36,8 +36,11 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+#as a concise template
 gem 'haml-rails'
 
+#For pagination
 gem 'will_paginate'
 
 #For solr search suppot
@@ -47,3 +50,6 @@ group :development, :test, :production do
   gem 'sunspot_solr'
 end
 gem 'progress_bar'
+
+#Extract html doc meta-data
+gem 'pismo'

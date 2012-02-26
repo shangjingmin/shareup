@@ -15,5 +15,9 @@
 /tmp
 
 *.swp
+*.swo
+*.lck
 
 doc/*
+solr/data
+solr/pids

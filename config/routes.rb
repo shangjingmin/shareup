@@ -14,7 +14,13 @@ Shareup::Application.routes.draw do
   #====Search
   get '/search', :to=>"searchs#index"
 
-  resources :metadocs
+  resources :metadocs do
+    collection do
+      get "extract"
+      get "shot"
+      get "test"
+    end
+  end
   
   namespace :my do
     get 'home/index'
@@ -23,8 +29,8 @@ Shareup::Application.routes.draw do
 
   #For admin.
   namespace :admin do
-    get "tags/index"
     get "users/index"
+    get "tags/index"
   end
   
   # The priority is based upon order of creation:

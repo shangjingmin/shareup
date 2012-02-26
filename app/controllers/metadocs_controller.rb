@@ -1,4 +1,34 @@
 class MetadocsController < ApplicationController
+
+  def test
+    render :text=>Docshot.first.content
+  end
+
+  #docshot
+  def shot
+    doc = Docshot.shot(params['doc_url']).try(:doc)
+    render :json=>{
+      :status=>'ok',
+      :msg=>"[#{doc.title}] has shot at this site!",
+      :doc_url=>doc.url
+    }
+  end
+
+  #Extrac doc
+  def extract
+    doc_url = params['doc_url'].to_s.strip
+    raise "Invalid doc_url:#{doc_url}" if doc_url.blank?
+    doc = Pismo[doc_url]
+    #standarize here FIXME
+    render :json=>{
+      :title=>doc.title,
+      :abstract=>"     "+doc.description,
+      :datetime=>doc.datetime.try(:to_s, :db),
+      :authors=>doc.authors,
+      :doc_url=>doc.url
+    }
+  end  
+
   # GET /metadocs
   # GET /metadocs.json
   def index
@@ -46,7 +76,7 @@ class MetadocsController < ApplicationController
   # POST /metadocs
   # POST /metadocs.json
   def create
-    @metadoc = Metadoc.new(params[:metadoc])
+    @metadoc = Metadoc.new(params[:metadoc].merge(:user_id=>session[:uid]))
 
     respond_to do |format|
       if @metadoc.save

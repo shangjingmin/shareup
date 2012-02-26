@@ -1,9 +1,30 @@
 -content_for :header do
   = stylesheet_link_tag "/plugins/colorbox/colorbox.css"
   = javascript_include_tag "/plugins/colorbox/jquery.colorbox.js"
-  -#TODO move into coffee to protect source code!
+  -#TODO move into coffee to protect source code! If so, how to ref instance variable
   :javascript
     $(function(){
+      //focus from url if new record?
+      if("#{@metadoc.new_record?}" == "true"){
+        $("#metadoc_from_url").focus()
+      }
+
+      //Extract html document meta-data 
+      $("#extract_from_url").click(function(){
+        if($("#metadoc_title").val().trim().length != 0){
+          if(!confirm("Title has existed, overwrite it?")){
+            return false
+          }
+        }
+        //send a ajax request
+        $.get("#{extract_metadocs_path}", {doc_url: $('#metadoc_from_url').val().trim()}, function(data){
+          $("#metadoc_title").val(data.title)
+          $("#metadoc_content").val(data.abstract)
+          $(".notice_msg").html("Load successfully!")
+        })
+        return false
+      })
+
       //Browse inline
       $("#browse_inline_from_url_iframe").click(function(){
         from_url = $("#metadoc_from_url").val().trim()
@@ -35,6 +56,14 @@
       $("#new_tab_from_url").click(function(){
         $(this).attr('href', $("#metadoc_from_url").val().trim())
       })
+
+      //Shot the url
+      $("#shot_from_url").click(function(){
+        $.get("#{shot_metadocs_path}", {doc_url: $('#metadoc_from_url').val().trim()}, function(data){
+          $(".notice_msg").html(data.msg)
+        })
+        return false
+      })
     })
 
 = form_for @metadoc do |f|
@@ -47,16 +76,16 @@
 
   .field
     = f.label :from_url, 'From'
-    = f.text_field :from_url
+    = f.text_field :from_url, :placeholder=>"Input your favorite url here!"
+    =link_to "Extract", "#", :id=>'extract_from_url'
+    | 
     =link_to "Browse Inline", "javascript:void(0);", :id=>'browse_inline_from_url_iframe'
     | 
     =link_to "Popup", "#", :id=>'popup_from_url_iframe'
     | 
     =link_to "New Tab", "#", :id=>'new_tab_from_url', :target=>'_blank'
     | 
-    =link_to "Extract", "#", :id=>'extract_from_url'
-    | 
-    =link_to "Snapshot", "#", :id=>'snapshot_from_url'
+    =link_to "Shot", "#", :id=>'shot_from_url'
     = f.check_box :public
     = f.label :public
   .field

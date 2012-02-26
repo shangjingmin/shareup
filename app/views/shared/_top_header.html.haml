@@ -10,7 +10,7 @@
         =link_to 'new', new_metadoc_path
     %td
       =form_tag search_path, :method=>:get do
-        =text_field_tag :query, '', :placeholder=>'Search...'
+        =text_field_tag :query, params[:query]||'', :placeholder=>'Search...'
         =image_submit_tag '/images/icon_search.png'
     %td
       %table
