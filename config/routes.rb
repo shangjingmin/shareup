@@ -18,6 +18,7 @@ Shareup::Application.routes.draw do
     collection do
       get "extract"
       get "shot"
+      get "view_shot"
       get "test"
     end
   end

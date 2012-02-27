@@ -8,7 +8,12 @@ class Metadoc < ActiveRecord::Base
     text :title
     text :content
     text :from_url
+    text :nickname
     time :collect_at
+  end
+
+  def docshot
+    Docshot.shot(from_url)
   end
 
   def self.extract_with_defaults(params = {})

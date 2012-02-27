@@ -50,7 +50,7 @@
         $(this).attr('href', $("#metadoc_from_url").val().trim())
         //$(this).colorbox({iframe:true, width:"80%", height:"80%"})
         //return false
-      }).colorbox({iframe:true, width:"80%", height:"80%"})
+      }).colorbox({iframe:true, width:"80%", height:"85%"})
 
       //New tab 
       $("#new_tab_from_url").click(function(){
@@ -104,3 +104,4 @@
     = f.text_field :comment
   .actions
     = f.submit 'Save'
+    = link_to "Cancel", metadocs_path, :params=>params

@@ -14,6 +14,11 @@ class MetadocsController < ApplicationController
     }
   end
 
+  def view_shot
+    raw_html_doc = Docshot.raw_html_doc(params[:url])
+    render :text=>raw_html_doc 
+  end
+
   #Extrac doc
   def extract
     doc_url = params['doc_url'].to_s.strip
@@ -36,7 +41,7 @@ class MetadocsController < ApplicationController
     @search = Metadoc.search do
       keywords params[:query]
       order_by :collect_at, :desc
-      paginate :page=>params[:page], :per_page=>25
+      paginate :page=>params[:page], :per_page=>15
     end
     @metadocs = @search.results
 
@@ -76,7 +81,7 @@ class MetadocsController < ApplicationController
   # POST /metadocs
   # POST /metadocs.json
   def create
-    @metadoc = Metadoc.new(params[:metadoc].merge(:user_id=>session[:uid]))
+    @metadoc = Metadoc.new(params[:metadoc].merge(:user_id=>session[:uid], :nickname=>current_user.nickname))
 
     respond_to do |format|
       if @metadoc.save
