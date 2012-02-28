@@ -2,6 +2,7 @@
 class Metadoc < ActiveRecord::Base
 
   validates_presence_of :title
+  #validates_presence_of :from_url
   validates_uniqueness_of :from_url, :scope=>:user_id
 
   searchable do
@@ -10,6 +11,11 @@ class Metadoc < ActiveRecord::Base
     text :from_url
     text :nickname
     time :collect_at
+  end
+
+  before_create :_init_set
+  def _init_set
+    self.collect_at = Time.now
   end
 
   def docshot

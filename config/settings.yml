@@ -1,0 +1,10 @@
+development:
+  # do not use this, this is not reight
+  :host: lab:3000
+
+test:
+  :host: lab:3000
+
+production:
+  :host: lab:3000
+

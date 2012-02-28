@@ -14,4 +14,5 @@ class ApplicationController < ActionController::Base
   def get_from_session
     session[:uid] && User.find(session[:uid])
   end
+
 end

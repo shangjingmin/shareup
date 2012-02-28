@@ -1,0 +1,59 @@
+= stylesheet_link_tag "application"
+= javascript_include_tag "application"
+= stylesheet_link_tag "/plugins/colorbox/colorbox.css"
+= javascript_include_tag "/plugins/colorbox/jquery.colorbox.js"
+:javascript
+  $(function(){
+    $("#metadoc_content").focus()
+    //Browse inline
+    $("#browse_inline_from_url_iframe").click(function(){
+      from_url = "#{@metadoc.from_url}"
+      $("#from_url_iframe_ele").attr("src", from_url)
+      $("#inline_iframe_wrapper").show()
+      return false
+    })
+    //close browse inline
+    $("#close_inline_iframe").click(function(){
+      $("#inline_iframe_wrapper").hide()
+      return false
+    })
+
+    //submit a form
+    $("#_the_form").submit(function(){
+      $.post("#{metadocs_path}", $(this).serialize(), function(data){
+        window.opener = null //disable the confirm
+        window.close()
+      })
+      return false 
+    })
+  })
+
+= form_for @metadoc, :html=>{:id=>"_the_form"} do |f|
+  -if @metadoc.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@metadoc.errors.count, "error")} prohibited this metadoc from being saved:"
+      %ul
+        - @metadoc.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :from_url, 'From:'
+    =link_to truncate(@metadoc.from_url, :length=>40), @metadoc.from_url, :title=>@metadoc.title||@metadoc.from_url 
+    =f.hidden_field :from_url
+    \&nbsp;| 
+    =link_to "Browse Inline", "javascript:void(0);", :id=>'browse_inline_from_url_iframe'
+    = f.check_box :public
+    = f.label :public
+  .field
+    #inline_iframe_wrapper.hidden
+      %div=link_to "Close Me", "#", :id=>"close_inline_iframe"
+      %iframe{:id=>'from_url_iframe_ele', :width=>'70%', :height=>'200px;', :frameborder=>1}
+  .field
+    = f.label :title
+    = f.text_field :title, :size=>22
+    = f.text_field :tags, :size=>8, :placeholder=>"Tags..."
+  .field
+    = f.text_area :content, :placeholder=>'Note something you want...', :rows=>6, :cols=>32
+  .actions
+    = f.submit 'Save'
+    = link_to "Close", "javascript:window.close();", :title=>"Close this window"

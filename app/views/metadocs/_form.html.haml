@@ -5,8 +5,10 @@
   :javascript
     $(function(){
       //focus from url if new record?
-      if("#{@metadoc.new_record?}" == "true"){
+      if("#{@metadoc.new_record?}" == "true" && $("#metadoc_from_url").val().trim().lenght==0){
         $("#metadoc_from_url").focus()
+      }else{
+        $("#metadoc_content").focus()
       }
 
       //Extract html document meta-data 
@@ -98,7 +100,7 @@
     = f.label :tags
     = f.text_field :tags, :size=>20
   .field
-    = f.text_area :content, :placeholder=>'Content...', :rows=>12, :cols=>51
+    = f.text_area :content, :placeholder=>'Content...', :rows=>8, :cols=>51
   -#.field
     = f.label :comment
     = f.text_field :comment

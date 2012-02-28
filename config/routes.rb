@@ -20,6 +20,7 @@ Shareup::Application.routes.draw do
       get "shot"
       get "view_shot"
       get "test"
+      get "quick_add"
     end
   end
   

@@ -19,6 +19,7 @@
                 =link_to metadoc.nickname, metadocs_path(:query=>metadoc.nickname)
                 share
               =link_to highlight(truncate(metadoc.title.titleize, :length=>40), params[:query]), metadoc
+              =link_to "Original", metadoc.from_url, :target=>'_blank' 
               = time_ago_in_words(metadoc.collect_at)
               \&nbsp;ago
         %tr

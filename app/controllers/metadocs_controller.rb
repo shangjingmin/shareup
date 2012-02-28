@@ -1,5 +1,10 @@
 class MetadocsController < ApplicationController
 
+  def quick_add
+    @metadoc = Metadoc.new(params[:doc])
+    render :layout=>nil
+  end
+  
   def test
     render :text=>Docshot.first.content
   end
@@ -32,6 +37,8 @@ class MetadocsController < ApplicationController
       :authors=>doc.authors,
       :doc_url=>doc.url
     }
+  rescue Exception=>e
+
   end  
 
   # GET /metadocs
@@ -65,7 +72,7 @@ class MetadocsController < ApplicationController
   # GET /metadocs/new
   # GET /metadocs/new.json
   def new
-    @metadoc = Metadoc.new
+    @metadoc = Metadoc.new(params[:doc])
 
     respond_to do |format|
       format.html # new.html.erb

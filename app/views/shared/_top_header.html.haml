@@ -23,6 +23,9 @@
           -else
             %td= link_to 'Sign In', auth_signin_path
             %td= link_to 'Quick Try', auth_quickin_path
-            -#%td= link_to 'Sign Up', auth_signup_path
+            %td= link_to 'Join', auth_signup_path
+    %td
+      %a{:href=>"javascript:(function(){f='#{quick_add_metadocs_url}?doc[from_url]='+encodeURIComponent(window.location.href)+'&amp;doc[title]='+encodeURIComponent(document.title)+'&amp;doc[content]='+encodeURIComponent(''+(window.getSelection?window.getSelection():document.getSelection?document.getSelection():document.selection.createRange().text))+'&amp;';a=function(){if(!window.open(f+'noui=1','shareupuiv1','location=2,links=0,scrollbars=1,toolbar=0,width=660,height=380'))location.href=f+'jump=yes'};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})()", :title=>"Collect to my doc repos", :class=>"bookmarklet"}
+        Favor this
     %td.notice_msg
       =flash[:notice]
