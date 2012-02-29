@@ -18,16 +18,35 @@
       return false
     })
 
+    //Shot the url
+    $("#shot_from_url").click(function(){
+      $.get("#{shot_metadocs_path}", {doc_url: $('#metadoc_from_url').val().trim()}, function(data){
+        $(".notice_msg").html(data.msg)
+      })
+      return false
+    })
+
     //submit a form
     $("#_the_form").submit(function(){
-      $.post("#{metadocs_path}", $(this).serialize(), function(data){
-        window.opener = null //disable the confirm
-        window.close()
+      //FIXME HOW TO DYNAMIC USE POST OR PUT
+      $.post("#{metadocs_path}.json", $(this).serialize(), function(data){
+        //error or ok?
+        if(data.status == 'error'){
+          $(".notice_msg").html((data.message))
+        }else{
+          window.opener = null //disable the confirm
+          window.close()
+        }
       })
       return false 
     })
   })
 
+-#
+  -if @metadoc.new_record?
+    = form_for @metadoc, :html=>{:id=>"_the_form"} do |f|
+  -else
+    = form_for @metadoc, :html=>{:id=>"_the_form"} do |f|
 = form_for @metadoc, :html=>{:id=>"_the_form"} do |f|
   -if @metadoc.errors.any?
     #error_explanation
@@ -40,8 +59,11 @@
     = f.label :from_url, 'From:'
     =link_to truncate(@metadoc.from_url, :length=>40), @metadoc.from_url, :title=>@metadoc.title||@metadoc.from_url 
     =f.hidden_field :from_url
+    =hidden_field_tag :create_from, 'quick_add'
     \&nbsp;| 
     =link_to "Browse Inline", "javascript:void(0);", :id=>'browse_inline_from_url_iframe'
+    | 
+    =link_to "Shot", "#", :id=>'shot_from_url'
     = f.check_box :public
     = f.label :public
   .field
@@ -55,5 +77,10 @@
   .field
     = f.text_area :content, :placeholder=>'Note something you want...', :rows=>6, :cols=>32
   .actions
-    = f.submit 'Save'
+    -if @metadoc.new_record?
+      = f.submit 'Save'
+    -else
+      ACTION_FOR_UPDATE_TODO
     = link_to "Close", "javascript:window.close();", :title=>"Close this window"
+  .field.notice_msg
+    =flash[:notice]

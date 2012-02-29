@@ -1,7 +1,14 @@
 class MetadocsController < ApplicationController
 
   def quick_add
-    @metadoc = Metadoc.new(params[:doc])
+    #find if it has add for current user
+    doc = Metadoc.find_by_from_url_and_user_id(params[:doc]['from_url'], session[:uid])
+    if doc.nil?
+      @metadoc = Metadoc.new(params[:doc])
+    else
+      @metadoc = doc
+      flash.now[:notice] = "Haha, you have collected this url at #{@metadoc.collect_at.to_s(:db)}, you see above..."
+    end
     render :layout=>nil
   end
   
@@ -93,11 +100,18 @@ class MetadocsController < ApplicationController
     respond_to do |format|
       if @metadoc.save
         #format.html { redirect_to @metadoc, notice: 'Metadoc was successfully created.' }
-        format.html { redirect_to metadocs_url }
+        format.html { redirect_to metadocs_url, notice: 'Metadoc was successfully created.' }
         format.json { render json: @metadoc, status: :created, location: @metadoc }
       else
-        format.html { render action: "new" }
-        format.json { render json: @metadoc.errors, status: :unprocessable_entity }
+        #handle errors from bookmarklet popup window
+        if(params[:create_from] == 'quick_add')
+          logger.debug "====>this is from popup bookmarklet"
+          render :json=>{:status=>"error", :message=>@metadoc.errors.full_messages.join('; ')}
+          return #TODO: why no work if have no this statement
+        else
+          format.html { render action: "new" }
+          format.json { render json: @metadoc.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
