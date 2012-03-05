@@ -11,7 +11,7 @@ class MetadocsController < ApplicationController
     end
     render :layout=>nil
   end
-  
+
   def test
     render :text=>Docshot.first.content
   end
@@ -28,7 +28,7 @@ class MetadocsController < ApplicationController
 
   def view_shot
     raw_html_doc = Docshot.raw_html_doc(params[:url])
-    render :text=>raw_html_doc 
+    render :text=>raw_html_doc
   end
 
   #Extrac doc
@@ -46,7 +46,7 @@ class MetadocsController < ApplicationController
     }
   rescue Exception=>e
 
-  end  
+  end
 
   # GET /metadocs
   # GET /metadocs.json
@@ -62,6 +62,7 @@ class MetadocsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @metadocs }
+      format.rss { render :layout => false }
     end
   end
 
